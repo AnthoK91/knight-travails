@@ -1,7 +1,10 @@
 //Breadth Search First
 let queue = [];
-//What if visited was a nest of 8 arrays, one for each move type? Then we just push into the relevant array.
+
+//A JavaScript Set is a collection of unique values. Each value can only occur once. It works well here rather than doing a for loop or check for each addition.
 let visited = new Set();
+
+//maps hold key: value pairs in an object. Methods are get, set, size (and more)
 let parentMap = new Map();
 
 //Takes a start position and an end result, and determines the shortest path there
@@ -11,7 +14,6 @@ function determinePath(start, end) {
   //return all moves and add to queue if possible
   nextMove(start);
   //while the queue is not 0, check to see if the queue 0 pos matches the end goal.
-  // If it doesn't shift it off. If it does match, reverse engineer where you were and break out of the while loop
   while (queue.length > 0) {
     let currentPosition = queue.shift();
 
@@ -57,12 +59,26 @@ function reconstructPath(start, end) {
   let path = [end];
   let current = end.toString();
 
+  // Trace back from end to start using the parentMap.
   while (current !== start.toString()) {
-    current = parentMap.get(current).toString();
-    path.unshift(parentMap.get(current));
+    const parent = parentMap.get(current);
+    if (!parent) {
+      console.error("Parent not found for:", current);
+      break;
+    }
+    path.unshift(parent);
+    current = parent.toString();
   }
 
-  console.log(`You made it in ${path.length - 1} moves! Here's your path: `);
+  console.log(`You made it in ${path.length - 1} moves! Here's your path:`);
   path.forEach((pos) => console.log(pos));
+  queue = [];
+
+  //A JavaScript Set is a collection of unique values. Each value can only occur once. It works well here rather than doing a for loop or check for each addition.
+  visited = new Set();
+
+  //maps hold key: value pairs in an object. Methods are get, set, size (and more)
+  parentMap = new Map();
+
   return path;
 }
