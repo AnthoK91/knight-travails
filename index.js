@@ -56,19 +56,30 @@ function isInBounds([x, y]) {
 }
 
 function reconstructPath(start, end) {
+  //creates a new array, path, with the starting point as the end
+
   let path = [end];
+
+  //gets the current position as the end
+
   let current = end.toString();
 
   // Trace back from end to start using the parentMap.
   while (current !== start.toString()) {
+    //get the mapped key from the 'current' reference.
+
     const parent = parentMap.get(current);
     if (!parent) {
       console.error("Parent not found for:", current);
       break;
     }
+    //add that to the path array by using unshift, so it adds it to the front of the array
+
     path.unshift(parent);
     current = parent.toString();
   }
+
+  //Once the while loop breaks it means that you reached the start position, so it prints out your pathway
 
   console.log(`You made it in ${path.length - 1} moves! Here's your path:`);
   path.forEach((pos) => console.log(pos));
