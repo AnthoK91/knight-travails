@@ -11,9 +11,10 @@ let parentMap = new Map();
 function determinePath(start, end) {
   queue.push(start);
   visited.add(start.toString());
-  //return all moves and add to queue if possible
+  //return all moves and add to queue if they are valid. In this iteration, we don't just stop when we reach the goal the first time,
+  // instead, we get every combination until we reach the end goal (in the while loop).
   nextMove(start);
-  //while the queue is not 0, check to see if the queue 0 pos matches the end goal.
+  //while the queue is not 0, check to see if the queue 0 pos matches the end goal. By way of ordering, the first time the queue hits the end goal, it's the shortest path.
   while (queue.length > 0) {
     let currentPosition = queue.shift();
 
